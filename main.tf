@@ -109,6 +109,9 @@ resource "aws_iam_role_policy_attachment" "jenkins_eks_worker_node_policy" {
 resource "aws_security_group" "jenkins_sg" {
   name   = var.jenkins_sg_name
   vpc_id = module.vpc.vpc_id
+  tags = {
+    Name = "jenkins-sg"
+  }
 
   ingress {
     from_port   = 22
@@ -124,6 +127,13 @@ resource "aws_security_group" "jenkins_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"] # Allow access to AWS APIs
+  }
+
   egress {
     from_port   = 0
     to_port     = 0
@@ -135,12 +145,12 @@ resource "aws_security_group" "jenkins_sg" {
 
 # EC2 Instance for Jenkins
 resource "aws_instance" "jenkins_ec2" {
-  ami                         = "ami-04b4f1a9cf54c11d0"
-  instance_type               = var.instance_type
-  key_name                    = var.key_name
-  subnet_id                   = module.vpc.public_subnets[0]
-  vpc_security_group_ids      = [aws_security_group.jenkins_sg.id]
-  iam_instance_profile        = aws_iam_instance_profile.jenkins_instance_profile.name
+  ami                    = "ami-04b4f1a9cf54c11d0"
+  instance_type          = var.instance_type
+  key_name               = var.key_name
+  subnet_id              = module.vpc.public_subnets[0]
+  vpc_security_group_ids = [aws_security_group.jenkins_sg.id]
+  iam_instance_profile   = aws_iam_instance_profile.jenkins_instance_profile.name
   tags = {
     Name = "jenkins-ec2"
   }
@@ -209,7 +219,17 @@ module "eks" {
     }
 
   }
-# Cluster access entry
-# To add the current caller identity as an administrator
+  # Cluster access entry
+  # To add the current caller identity as an administrator
   enable_cluster_creator_admin_permissions = true
+}
+
+resource "aws_security_group_rule" "eks_allow_jenkins" {
+  type                     = "ingress"
+  from_port                = 443
+  to_port                  = 443
+  protocol                 = "tcp"
+  security_group_id        = module.eks.cluster_security_group_id
+  source_security_group_id = aws_security_group.jenkins_sg.id
+  description              = "Allow Jenkins EC2 instance to access EKS API server"
 }
