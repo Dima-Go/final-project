@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: flask-app
+  name: contacts-app
   labels:
-    app: flask-app
+    app: contacts-app
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: flask-app
+      app: contacts-app
   template: #pod defintion
     metadata:
       labels:
-        app: flask-app
+        app: contacts-app
     spec: # container specs
       containers:
-        - name: flask-app
+        - name: contacts-app
           image: shashkist/flask-contacts-app
           ports:
             - containerPort: 5052
@@ -31,12 +31,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
- name: flask-app-service
+ name: flask-contacts-service
 spec:
  selector:
-   app: flask-app
+   app: contacts-app
  type: LoadBalancer # external service which can be accessed from outside the cluster
  ports:
-   - protocol: TCP
+   - name: flask-contacts-service 
+     protocol: TCP
      port: 5000
      targetPort: 5052   
