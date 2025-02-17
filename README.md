@@ -61,7 +61,7 @@ Git repo "final-project" includes following files:
 9. In Manage Jenkins add Credentials for access key id and for secret access key.
 10. Create new pipeline in Jenkins, using the script in Jenkinsfile.
 11. Run build on the Pipeline.
-12. Use the cluster's external IP to launch the web app on port 5000.
+12. After the flask app is deployed on the nodes, find the external IP of the flask-contacts-service to launch the web app on port 5000.
 13. Add new contacts, see the Contacts table being updated.
 
 
