@@ -55,7 +55,7 @@ Git repo "final-project" includes following files:
 5. Use the ec2 instance IP with port 8080 to launch Jenkins.
 6. Use the Jenkins initial password to login. The password is on the EC2, so need to ssh to it via AWS CLI on the console, or ssh from your terminal (pem key needs to be in the same folder):
    * ssh -i <your-key-pair.pem> ubuntu@<the-ip-of-the-ec2>
-     and then run the command: 
+      and then run the command: 
    * sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 8. Install the initially suggested plugins.
 9. In Manage Jenkins add Credentials for access key id and for secret access key.
