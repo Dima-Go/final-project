@@ -6,7 +6,7 @@ pipeline {
         AWS_REGION = 'us-east-1'
         EKS_CLUSTER = "my-terra-cluster" 
         GIT_REPO = "https://github.com/Dima-Go/final-project.git"
-        WORKSPACE_DIR = "/var/lib/jenkins/workspace/repo/"
+        WORKSPACE_DIR = "/var/lib/jenkins/workspace/repo"
     }
 
     stages {
