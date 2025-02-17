@@ -53,13 +53,16 @@ Git repo "final-project" includes following files:
 3. Run terraform init, plan and apply (Terraform needs to be installed). 
 4. Terraform will create number of objects in AWS (this can take some time). 
 5. Use the ec2 instance IP with port 8080 to launch Jenkins.
-6. Use the Jenkins initial password to login.
-7. Install the initially suggested plugins.
-8. In Manage Jenkins add Credentials for access key id and for secret access key.
-9. Create new pipeline in Jenkins, using the script in Jenkinsfile.
-10. Run build on the Pipeline.
-11. Use the cluster's external IP to launch the web app on port 5000.
-12. Add new contacts, see the Contacts table being updated.
+6. Use the Jenkins initial password to login. The password is on the EC2, so need to ssh to it via AWS CLI on the console, or ssh from your terminal (pem key needs to be in the same folder):
+   * ssh -i <your-key-pair.pem> ubuntu@<the-ip-of-the-ec2>
+     and then run the command: 
+   * sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+8. Install the initially suggested plugins.
+9. In Manage Jenkins add Credentials for access key id and for secret access key.
+10. Create new pipeline in Jenkins, using the script in Jenkinsfile.
+11. Run build on the Pipeline.
+12. Use the cluster's external IP to launch the web app on port 5000.
+13. Add new contacts, see the Contacts table being updated.
 
 
 **Additional notes for some Security aspects**
