@@ -54,7 +54,7 @@ Git repo "final-project" includes following files:
 4. Terraform will create number of objects in AWS (this can take some time). 
 5. Use the ec2 instance IP with port 8080 to launch Jenkins.
 6. Use the Jenkins initial password to login. The password is on the EC2, so need to ssh to it via AWS CLI on the console, or ssh from your terminal (pem key needs to be in the same folder):
-   * ssh -i <your-key-pair.pem> ubuntu@"public-ip-of-the-ec2"
+   * ssh -i (your-key-pair.pem) ubuntu@(your-ec2-public-ip) <br>
       and then run the command: 
    * sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 8. Install the initially suggested plugins.
